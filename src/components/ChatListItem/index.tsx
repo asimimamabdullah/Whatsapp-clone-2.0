@@ -1,20 +1,33 @@
 import { Text, View, Image, StyleSheet } from "react-native";
 import chats from "../../../assets/data/chats.json";
 
-const ChatListItem = () => {
+interface ChatProps {
+	id: string;
+	user: {
+		id: string;
+		name: string;
+		image: string;
+	};
+	lastMessage: {
+		id: string;
+		text: string;
+		createdAt: string;
+	};
+}
+const ChatListItem = ({ chat }: { chat: ChatProps }) => {
 	return (
 		<View style={styles.container}>
-			<Image source={{ uri: chats[0].user.image }} style={styles.image} />
+			<Image source={{ uri: chat.user.image }} style={styles.image} />
 
 			<View style={styles.content}>
 				<View style={styles.row}>
 					<Text numberOfLines={1} style={styles.name}>
-						{chats[0].user.name}
+						{chat.user.name}
 					</Text>
-					<Text style={styles.subTitle}>{chats[0].lastMessage.createdAt}</Text>
+					<Text style={styles.subTitle}>{chat.lastMessage.createdAt.substring(0, 10)}</Text>
 				</View>
 				<Text numberOfLines={2} style={styles.subTitle}>
-					{chats[0].lastMessage.text}
+					{chat.lastMessage.text}
 				</Text>
 			</View>
 		</View>
