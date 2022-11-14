@@ -6,7 +6,12 @@ import ChatListItem from "../ChatListItem/ChatListItem";
 type Props = {};
 
 const ChatsScreen = (props: Props) => {
-	return <FlatList data={chats} renderItem={({ item }) => <ChatListItem chat={item} />} />;
+	return (
+		<FlatList
+			data={chats}
+			renderItem={({ item }) => <ChatListItem chat={item} />}
+		/>
+	);
 };
 
 export default ChatsScreen;
