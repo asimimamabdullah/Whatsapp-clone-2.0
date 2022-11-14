@@ -1,19 +1,10 @@
 import { Text, View, Image, StyleSheet } from "react-native";
-import chats from "../../../assets/data/chats.json";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
+// import chats from "../../../assets/data/chats.json";
+import { ChatProps } from "../../../types/types";
 
-interface ChatProps {
-	id: string;
-	user: {
-		id: string;
-		name: string;
-		image: string;
-	};
-	lastMessage: {
-		id: string;
-		text: string;
-		createdAt: string;
-	};
-}
 const ChatListItem = ({ chat }: { chat: ChatProps }) => {
 	return (
 		<View style={styles.container}>
@@ -24,7 +15,7 @@ const ChatListItem = ({ chat }: { chat: ChatProps }) => {
 					<Text numberOfLines={1} style={styles.name}>
 						{chat.user.name}
 					</Text>
-					<Text style={styles.subTitle}>{chat.lastMessage.createdAt.substring(0, 10)}</Text>
+					<Text style={styles.subTitle}>{dayjs(chat.lastMessage.createdAt).fromNow(true)}</Text>
 				</View>
 				<Text numberOfLines={2} style={styles.subTitle}>
 					{chat.lastMessage.text}
