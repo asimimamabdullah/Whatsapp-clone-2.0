@@ -1,23 +1,15 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ChatScreen from "./src/screens/ChatScreen";
+import { Amplify } from "aws-amplify";
+import awsconfig from "./src/aws-exports";
+
 import Navigator from "./src/navigation/Navigator";
 
+Amplify.configure(awsconfig);
+
 export default function App() {
-	// const chat: ChatProps = {
-	// 	id: "1",
-	// 	user: {
-	// 		id: "u2",
-	// 		name: "Lukas",
-	// 		image: "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/lukas.jpeg",
-	// 	},
-	// 	lastMessage: {
-	// 		id: "m1",
-	// 		text: "Well done this sprint, guys!",
-	// 		createdAt: "2022-10-14T13:30:00.000Z",
-	// 	},
-	// };
+	console.log(Amplify.Storage);
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
 			<View style={styles.container}>
