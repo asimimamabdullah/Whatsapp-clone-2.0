@@ -1,10 +1,8 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ChatListItem from "./src/components/ChatListItem/ChatListItem";
-import { ChatProps } from "./types/types";
-import ChatsScreen from "./src/components/screens/ChatsScreen";
-import ChatScreen from "./src/components/screens/ChatScreen";
+import ChatScreen from "./src/screens/ChatScreen";
+import Navigator from "./src/navigation/Navigator";
 
 export default function App() {
 	// const chat: ChatProps = {
@@ -23,8 +21,7 @@ export default function App() {
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
 			<View style={styles.container}>
-				{/* <ChatsScreen /> */}
-				<ChatScreen />
+				<Navigator />
 				<StatusBar style="auto" />
 			</View>
 		</SafeAreaView>
@@ -34,7 +31,7 @@ export default function App() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#fff",
+		backgroundColor: "red",
 		// alignItems: "center",
 		justifyContent: "center",
 	},

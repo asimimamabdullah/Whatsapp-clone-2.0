@@ -21,3 +21,10 @@ export interface MessageProps {
 		name: string;
 	};
 }
+
+export interface UserProps {
+	id: string;
+	name: string;
+	image: string;
+	status?: string;
+}
