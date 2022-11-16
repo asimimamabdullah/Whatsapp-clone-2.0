@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 
 	name: { flex: 1, fontWeight: "bold" },
 	subTitle: { color: "gray" },
-	content: {},
+	content: { flex: 1 },
 });
 
 export default ContactListItem;
