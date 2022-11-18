@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import { MessageProps } from "../../../../types/types";
+// import { Message } from "../../../API";
 
 const Message = (props: { message: MessageProps }) => {
 	const isMyMessage = () => {
