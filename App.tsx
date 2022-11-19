@@ -24,23 +24,24 @@ function App() {
 				await Auth.currentAuthenticatedUser({
 					bypassCache: true,
 				});
-			console.log("auth user: ", authUser.attributes.sub);
 
 			// query the database using Auth user id (sub)
 			const userData: any = await API.graphql(
 				graphqlOperation(getUser, { id: authUser.attributes.sub }),
 			);
-			console.log("user data: ", userData);
 			if (userData.data.getUser) {
 				console.log("user already exists in DB");
 				return;
 			}
 			// if there is no user in db, create one
-			const newUser = {};
+			const newUser = {
+				id: authUser.attributes.sub,
+				name: authUser.attributes.phone_number,
+				// image: ,
+				status: "Hey, I am using Whatsapp",
+			};
 
-			const newUserResponse = await API.graphql(
-				graphqlOperation(createUser, { variables: { input: newUser } }),
-			);
+			await API.graphql(graphqlOperation(createUser, { input: newUser }));
 		};
 
 		syncUser();
