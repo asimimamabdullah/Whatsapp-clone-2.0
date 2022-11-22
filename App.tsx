@@ -5,11 +5,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Amplify, Auth, API, graphqlOperation } from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react-native";
 import type { CognitoUser } from "amazon-cognito-identity-js";
+import type { GraphQLResult } from "@aws-amplify/api-graphql";
 import { getUser } from "./src/graphql/queries";
 import { createUser } from "./src/graphql/mutations";
 
 import Navigator from "./src/navigation/Navigator";
 import awsmobile from "./src/aws-exports";
+import { GetUserQuery, CreateUserMutation } from "./src/API";
 
 Amplify.configure({ ...awsmobile, Analytics: { disabled: true } });
 // Amplify.configure(awsmobile);
@@ -26,10 +28,10 @@ function App() {
 				});
 
 			// query the database using Auth user id (sub)
-			const userData: any = await API.graphql(
+			const userData = await (API.graphql(
 				graphqlOperation(getUser, { id: authUser.attributes.sub }),
-			);
-			if (userData.data.getUser) {
+			) as Promise<GraphQLResult<GetUserQuery>>);
+			if (userData.data?.getUser) {
 				console.log("user already exists in DB");
 				return;
 			}
@@ -41,7 +43,9 @@ function App() {
 				status: "Hey, I am using Whatsapp",
 			};
 
-			await API.graphql(graphqlOperation(createUser, { input: newUser }));
+			await (API.graphql(
+				graphqlOperation(createUser, { input: newUser }),
+			) as Promise<GraphQLResult<CreateUserMutation>>);
 		};
 
 		syncUser();

@@ -5,28 +5,31 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import { ChatProps } from "../../../../types/types";
 
-const ChatListItem = ({ chat }: { chat: ChatProps }) => {
+const ChatListItem = ({ chat }: { chat: any }) => {
 	const navigation: any = useNavigation();
+
+	// loop through chat.users.items and find a user that is not useNavigation(authenticateduser)
+	const user = chat.users.items[0].user;
 
 	return (
 		<Pressable
 			style={styles.container}
 			onPress={() =>
-				navigation.navigate("Chat", { id: chat.id, name: chat.user.name })
+				navigation.navigate("Chat", { id: chat?.id, name: user?.name })
 			}>
-			<Image source={{ uri: chat.user.image }} style={styles.image} />
+			<Image source={{ uri: user?.image }} style={styles.image} />
 
 			<View style={styles.content}>
 				<View style={styles.row}>
 					<Text numberOfLines={1} style={styles.name}>
-						{chat.user.name}
+						{user?.name}
 					</Text>
 					<Text style={styles.subTitle}>
-						{dayjs(chat.lastMessage.createdAt).fromNow(true)}
+						{dayjs(chat.lastMessage?.createdAt).fromNow(true)}
 					</Text>
 				</View>
 				<Text numberOfLines={2} style={styles.subTitle}>
-					{chat.lastMessage.text}
+					{chat.lastMessage?.text}
 				</Text>
 			</View>
 		</Pressable>
