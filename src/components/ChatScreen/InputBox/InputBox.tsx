@@ -1,14 +1,32 @@
 import React, { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
+import { API, graphqlOperation, Auth } from "aws-amplify";
+import { createMessage } from "../../../graphql/mutations";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { CreateMessageMutation } from "../../../API";
 
-type Props = {};
+type Props = {
+	chatroomID: string;
+};
 
-const InputBox = (props: Props) => {
-	const [newMessage, setNewMessage] = useState<string>("");
-	const onSend = () => {
-		console.warn("send a new message: ", newMessage);
-		setNewMessage("");
+const InputBox = ({ chatroomID }: Props) => {
+	const [text, setText] = useState<string>("");
+	const onSend = async () => {
+		console.warn("sending a new message: ", text);
+		const authUser = await Auth.currentAuthenticatedUser();
+
+		const newMessage = {
+			chatroomID,
+			text,
+			userID: authUser.attributes.sub,
+		};
+
+		await (API.graphql(
+			graphqlOperation(createMessage, { input: newMessage }),
+		) as Promise<GraphQLResult<CreateMessageMutation>>);
+
+		setText("");
 	};
 
 	return (
@@ -18,8 +36,8 @@ const InputBox = (props: Props) => {
 			{/* Text Input  */}
 			<TextInput
 				style={styles.input}
-				onChangeText={setNewMessage}
-				placeholder="type your message..."
+				onChangeText={setText}
+				placeholder="Type your message..."
 			/>
 
 			{/* Icon  */}

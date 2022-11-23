@@ -7,8 +7,10 @@ import { messages } from "../../assets/data";
 import InputBox from "../components/ChatScreen/InputBox/InputBox";
 
 const ChatScreen = () => {
-	const route: any = useRoute();
+	const route = useRoute<any>();
 	const navigation = useNavigation();
+
+	const chatroomID = route.params.id;
 
 	useEffect(() => {
 		navigation.setOptions({ title: route.params.name });
@@ -22,7 +24,7 @@ const ChatScreen = () => {
 				style={styles.list}
 				inverted
 			/>
-			<InputBox />
+			<InputBox chatroomID={chatroomID} />
 		</ImageBackground>
 	);
 };

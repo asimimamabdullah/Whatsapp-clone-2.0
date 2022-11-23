@@ -32,7 +32,7 @@ const ChatListItem = ({ chat }: { chat: ChatRoom }) => {
 			onPress={() =>
 				navigation.navigate("Chat", {
 					id: chat?.id,
-					name: user?.user?.name,
+					name: user?.user.name,
 				})
 			}>
 			<Image
