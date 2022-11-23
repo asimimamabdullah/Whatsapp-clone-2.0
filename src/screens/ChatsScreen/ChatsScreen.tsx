@@ -1,10 +1,8 @@
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
-import chats from "../../../assets/data/chats.json";
+import { FlatList, StyleSheet } from "react-native";
 import ChatListItem from "../../components/ChatScreen/ChatListItem/ChatListItem";
-// import { listChatRooms } from "../../graphql/queries";
 import { listChatRooms } from "./queries";
 import { GetUserQuery, UserChatRoom } from "../../API";
 
@@ -20,7 +18,6 @@ const ChatsScreen = (props: Props) => {
 			const response = await (API.graphql(
 				graphqlOperation(listChatRooms, { id: authUser.attributes.sub }),
 			) as Promise<GraphQLResult<GetUserQuery>>);
-			// console.log(response.data?.getUser?.ChatRooms?.items);
 			setChatRoom(
 				response.data?.getUser?.ChatRooms?.items as Array<UserChatRoom>,
 			);

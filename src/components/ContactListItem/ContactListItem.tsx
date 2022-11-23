@@ -34,9 +34,9 @@ const ContactListItem = ({ user }: { user: UserProps }) => {
 			}),
 		) as Promise<GraphQLResult<CreateChatRoomMutation>>);
 
-		// console.log("chatroom data: ", newChatRoomData);
 		if (!newChatRoomData.data?.createChatRoom) {
 			console.log("Error creating the chat error");
+			console.warn("Error creating the chat error");
 		}
 
 		const newChatRoom = newChatRoomData.data?.createChatRoom;
@@ -54,7 +54,8 @@ const ContactListItem = ({ user }: { user: UserProps }) => {
 		const authUser = await (Auth.currentAuthenticatedUser() as Promise<
 			CognitoUser | any
 		>);
-		console.log("auth user; ", authUser);
+
+		// console.log("auth user; ", authUser);
 		await (API.graphql(
 			graphqlOperation(createUserChatRoom, {
 				input: {

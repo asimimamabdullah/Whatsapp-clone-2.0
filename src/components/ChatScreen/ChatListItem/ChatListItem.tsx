@@ -4,7 +4,6 @@ import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
-// import { ChatProps } from "../../../../types/types";
 import { ChatRoom, UserChatRoom } from "../../../API";
 import { Auth } from "aws-amplify";
 

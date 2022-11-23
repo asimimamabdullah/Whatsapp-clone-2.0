@@ -1,5 +1,4 @@
 import { API, graphqlOperation, Auth } from "aws-amplify";
-import { GetUserQuery } from "../API";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 
 export const getCommonChatRoomWithUser = async (userID: any) => {
@@ -18,30 +17,8 @@ export const getCommonChatRoomWithUser = async (userID: any) => {
 		),
 	);
 
-	console.log(
-		"chatroom service:..........................................",
-		chatRoom,
-	);
-	// chatRooms
-	//
-	// get all chatrooms of user2
-	// remove chat rooms with more than 2 users
-	// get the common chatrooms
 	return chatRoom;
 };
-
-export interface ChatRoomQueryForChatRoomService {
-	chatRoom: {
-		id: string;
-		users: {
-			items: {
-				user: {
-					id: string;
-				};
-			};
-		};
-	};
-}
 
 export interface GetUserChatRooms {
 	getUser: {
