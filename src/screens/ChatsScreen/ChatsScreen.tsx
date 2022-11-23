@@ -6,7 +6,7 @@ import chats from "../../../assets/data/chats.json";
 import ChatListItem from "../../components/ChatScreen/ChatListItem/ChatListItem";
 // import { listChatRooms } from "../../graphql/queries";
 import { listChatRooms } from "./queries";
-import { GetUserQuery } from "../../API";
+import { GetUserQuery, UserChatRoom } from "../../API";
 
 type Props = {};
 
@@ -21,7 +21,9 @@ const ChatsScreen = (props: Props) => {
 				graphqlOperation(listChatRooms, { id: authUser.attributes.sub }),
 			) as Promise<GraphQLResult<GetUserQuery>>);
 			// console.log(response.data?.getUser?.ChatRooms?.items);
-			setChatRoom(response.data?.getUser?.ChatRooms?.items as Array<{}>);
+			setChatRoom(
+				response.data?.getUser?.ChatRooms?.items as Array<UserChatRoom>,
+			);
 		};
 
 		fetchChatRooms();
@@ -30,7 +32,9 @@ const ChatsScreen = (props: Props) => {
 	return (
 		<FlatList
 			data={chatRoom}
-			renderItem={({ item }) => <ChatListItem chat={item.chatRoom} />}
+			renderItem={({ item }: { item: UserChatRoom }) => (
+				<ChatListItem chat={item.chatRoom} />
+			)}
 			style={{ backgroundColor: "white" }}
 		/>
 	);
