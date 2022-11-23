@@ -3,9 +3,7 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import { API, graphqlOperation } from "aws-amplify";
 import { listUsers } from "../graphql/queries";
 import { ListUsersQuery } from "../API";
-import { chats } from "../../assets/data";
 import ContactListItem from "../components/ContactListItem/ContactListItem";
-import { ChatProps } from "../../types/types";
 import type { GraphQLResult, GraphQLOperation } from "@aws-amplify/api-graphql";
 
 interface UsersProps {
