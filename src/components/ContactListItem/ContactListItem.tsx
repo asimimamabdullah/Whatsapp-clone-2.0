@@ -11,7 +11,7 @@ import type { GraphQLResult } from "@aws-amplify/api-graphql";
 import { CognitoUser } from "amazon-cognito-identity-js";
 import {
 	getCommonChatRoomWithUser,
-	GetUser,
+	GetUserChatRooms,
 } from "../../services/chatRoomService";
 
 const ContactListItem = ({ user }: { user: UserProps }) => {
@@ -21,54 +21,52 @@ const ContactListItem = ({ user }: { user: UserProps }) => {
 		console.warn("Pressed");
 		// check if we already have a chatroom with user
 
-		const existingChatRoom = await (getCommonChatRoomWithUser(
-			user.id,
-		) as Promise<GetUser>);
+		const existingChatRoom = await getCommonChatRoomWithUser(user.id);
 		if (existingChatRoom) {
-			navigation.navigate("Chat", { id: existingChatRoom.id });
+			navigation.navigate("Chat", { id: existingChatRoom.chatRoom.id });
 			return;
 		}
 
 		// create a new chatroom
-		// 		const newChatRoomData = await (API.graphql(
-		// 			graphqlOperation(createChatRoom, {
-		// 				input: {},
-		// 			}),
-		// 		) as Promise<GraphQLResult<CreateChatRoomMutation>>);
-		//
-		// 		// console.log("chatroom data: ", newChatRoomData);
-		// 		if (!newChatRoomData.data?.createChatRoom) {
-		// 			console.log("Error creating the chat error");
-		// 		}
-		//
-		// 		const newChatRoom = newChatRoomData.data?.createChatRoom;
-		//
-		// 		// Add the clicked user to chatroom
-		//
-		// 		await (API.graphql(
-		// 			graphqlOperation(createUserChatRoom, {
-		// 				input: { chatRoomID: newChatRoom?.id, userID: user.id },
-		// 			}),
-		// 		) as Promise<GraphQLResult<CreateUserChatRoomMutation>>);
-		//
-		// 		// Add the auth user to chat room
-		//
-		// 		const authUser = await (Auth.currentAuthenticatedUser() as Promise<
-		// 			CognitoUser | any
-		// 		>);
-		// 		console.log("auth user; ", authUser);
-		// 		await (API.graphql(
-		// 			graphqlOperation(createUserChatRoom, {
-		// 				input: {
-		// 					chatRoomID: newChatRoom?.id,
-		// 					userID: authUser.attributes.sub,
-		// 				},
-		// 			}),
-		// 		) as Promise<GraphQLResult<CreateUserChatRoomMutation>>);
-		//
-		// 		// navigate to the newly created chatroom
-		//
-		// 		navigation.navigate("Chat", { id: newChatRoom?.id });
+		const newChatRoomData = await (API.graphql(
+			graphqlOperation(createChatRoom, {
+				input: {},
+			}),
+		) as Promise<GraphQLResult<CreateChatRoomMutation>>);
+
+		// console.log("chatroom data: ", newChatRoomData);
+		if (!newChatRoomData.data?.createChatRoom) {
+			console.log("Error creating the chat error");
+		}
+
+		const newChatRoom = newChatRoomData.data?.createChatRoom;
+
+		// Add the clicked user to chatroom
+
+		await (API.graphql(
+			graphqlOperation(createUserChatRoom, {
+				input: { chatRoomID: newChatRoom?.id, userID: user.id },
+			}),
+		) as Promise<GraphQLResult<CreateUserChatRoomMutation>>);
+
+		// Add the auth user to chat room
+
+		const authUser = await (Auth.currentAuthenticatedUser() as Promise<
+			CognitoUser | any
+		>);
+		console.log("auth user; ", authUser);
+		await (API.graphql(
+			graphqlOperation(createUserChatRoom, {
+				input: {
+					chatRoomID: newChatRoom?.id,
+					userID: authUser.attributes.sub,
+				},
+			}),
+		) as Promise<GraphQLResult<CreateUserChatRoomMutation>>);
+
+		// navigate to the newly created chatroom
+
+		navigation.navigate("Chat", { id: newChatRoom?.id });
 	};
 
 	return (

@@ -8,48 +8,57 @@ export const getCommonChatRoomWithUser = async (userID: any) => {
 
 	const response = await (API.graphql(
 		graphqlOperation(listChatRooms, { id: authUser.attributes?.sub }),
-	) as Promise<GraphQLResult<GetUser>>);
+	) as Promise<GraphQLResult<GetUserChatRooms>>);
 
-	const chatRooms = response.data?.ChatRooms.items || [];
+	const chatRooms = response.data?.getUser.ChatRooms.items || [];
 
-	console.log(chatRooms);
+	const chatRoom = chatRooms.find((chatRoomItem) =>
+		chatRoomItem?.chatRoom.users.items.some(
+			(useritem) => useritem?.user.id === userID,
+		),
+	);
+
+	console.log(
+		"chatroom service:..........................................",
+		chatRoom,
+	);
 	// chatRooms
 	//
 	// get all chatrooms of user2
 	// remove chat rooms with more than 2 users
 	// get the common chatrooms
-	return response;
+	return chatRoom;
 };
 
-interface ChatRoomQueryForChatRoomService {
-	items: Array<{
-		chatRoom: {
-			id: string;
-			users: {
-				items: {
-					user: {
-						id: string;
-					};
+export interface ChatRoomQueryForChatRoomService {
+	chatRoom: {
+		id: string;
+		users: {
+			items: {
+				user: {
+					id: string;
 				};
 			};
 		};
-	}>;
+	};
 }
 
-export interface GetUser {
-	id: string;
-	ChatRooms: {
-		items: {
-			chatRoom: {
-				id: string;
-				users: {
-					items: {
-						user: {
-							id: string;
-						};
+export interface GetUserChatRooms {
+	getUser: {
+		id: string;
+		ChatRooms: {
+			items: Array<{
+				chatRoom: {
+					id: string;
+					users: {
+						items: Array<{
+							user: {
+								id: string;
+							};
+						} | null>;
 					};
 				};
-			};
+			} | null>;
 		};
 	};
 }
