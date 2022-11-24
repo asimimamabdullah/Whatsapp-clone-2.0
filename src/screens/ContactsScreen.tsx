@@ -36,6 +36,7 @@ const ContactsScreen = () => {
 		const usersList: Promise<GraphQLResult<any>> = API.graphql(
 			graphqlOperation(listUsers as ListUsersQuery),
 		);
+		console.log("user list: ", usersList);
 
 		usersList.then((res: GraphQLResult<ListUsersQuery>) => {
 			setUsers(res.data?.listUsers?.items as Array<UsersProps>);
