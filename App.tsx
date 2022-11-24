@@ -35,6 +35,10 @@ function App() {
 				console.log("user already exists in DB");
 				return;
 			}
+			// console.log("user : ", {
+			// 	id: authUser.attributes.sub,
+			// 	phone: authUser.attributes.phone_number,
+			// });
 			// if there is no user in db, create one
 			const newUser = {
 				id: authUser.attributes.sub,
@@ -42,10 +46,12 @@ function App() {
 				// image: ,
 				status: "Hey, I am using Whatsapp",
 			};
+			// console.log("before");
 
 			await (API.graphql(
 				graphqlOperation(createUser, { input: newUser }),
 			) as Promise<GraphQLResult<CreateUserMutation>>);
+			console.log("after");
 		};
 
 		syncUser();
@@ -70,3 +76,6 @@ const styles = StyleSheet.create({
 });
 
 export default withAuthenticator(App);
+// 398
+// 445
+// 439

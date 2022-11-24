@@ -21,14 +21,14 @@ export const schema = {
                     "name": "status",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "image": {
                     "name": "image",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "ChatRooms": {
@@ -377,5 +377,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.1",
-    "version": "f19255d86c89b82f603e252f00839b16"
+    "version": "81b868f10b9a25c7f7fa16dd7bc88428"
 };

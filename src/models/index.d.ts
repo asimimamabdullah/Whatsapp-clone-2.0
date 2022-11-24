@@ -21,8 +21,8 @@ type UserChatRoomMetaData = {
 type EagerUser = {
   readonly id: string;
   readonly name: string;
-  readonly status: string;
-  readonly image: string;
+  readonly status?: string | null;
+  readonly image?: string | null;
   readonly ChatRooms?: (UserChatRoom | null)[] | null;
   readonly Messages?: (Message | null)[] | null;
   readonly createdAt?: string | null;
@@ -32,8 +32,8 @@ type EagerUser = {
 type LazyUser = {
   readonly id: string;
   readonly name: string;
-  readonly status: string;
-  readonly image: string;
+  readonly status?: string | null;
+  readonly image?: string | null;
   readonly ChatRooms: AsyncCollection<UserChatRoom>;
   readonly Messages: AsyncCollection<Message>;
   readonly createdAt?: string | null;
