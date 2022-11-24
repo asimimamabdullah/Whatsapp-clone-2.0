@@ -17,8 +17,6 @@ Amplify.configure({ ...awsmobile, Analytics: { disabled: true } });
 // Amplify.configure(awsmobile);
 
 function App() {
-	// console.log("user..........................	.: ", Auth.currentCredentials());
-
 	useEffect(() => {
 		const syncUser = async () => {
 			// get Auth user
@@ -35,10 +33,6 @@ function App() {
 				console.log("user already exists in DB");
 				return;
 			}
-			// console.log("user : ", {
-			// 	id: authUser.attributes.sub,
-			// 	phone: authUser.attributes.phone_number,
-			// });
 			// if there is no user in db, create one
 			const newUser = {
 				id: authUser.attributes.sub,
@@ -46,7 +40,6 @@ function App() {
 				// image: ,
 				status: "Hey, I am using Whatsapp",
 			};
-			// console.log("before");
 
 			await (API.graphql(
 				graphqlOperation(createUser, { input: newUser }),
