@@ -38,6 +38,7 @@ const InputBox = ({ chatroomID }: Props) => {
 				style={styles.input}
 				onChangeText={setText}
 				placeholder="Type your message..."
+				value={text}
 			/>
 
 			{/* Icon  */}

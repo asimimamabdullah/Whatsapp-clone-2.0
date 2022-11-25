@@ -12,15 +12,15 @@ export interface ChatProps {
 	};
 }
 
-export interface MessageProps {
-	id: string;
-	text: string;
-	createdAt: string;
-	user: {
-		id: string;
-		name: string;
-	};
-}
+// export interface MessageProps {
+// 	id: string;
+// 	text: string;
+// 	createdAt: string;
+// 	user: {
+// 		id: string;
+// 		name: string;
+// 	};
+// }
 
 export interface UserProps {
 	id: string;
