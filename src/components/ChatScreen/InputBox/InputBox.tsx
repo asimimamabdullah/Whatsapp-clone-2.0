@@ -2,31 +2,43 @@ import React, { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { API, graphqlOperation, Auth } from "aws-amplify";
-import { createMessage } from "../../../graphql/mutations";
+import { createMessage, updateChatRoom } from "../../../graphql/mutations";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
-import { CreateMessageMutation } from "../../../API";
+import { ChatRoom, CreateMessageMutation } from "../../../API";
 
 type Props = {
-	chatroomID: string;
+	chatroom: ChatRoom;
 };
 
-const InputBox = ({ chatroomID }: Props) => {
+const InputBox = ({ chatroom }: Props) => {
 	const [text, setText] = useState<string>("");
 	const onSend = async () => {
-		console.warn("sending a new message: ", text);
-		const authUser = await Auth.currentAuthenticatedUser();
+		if (text.length > 0) {
+			const authUser = await Auth.currentAuthenticatedUser();
 
-		const newMessage = {
-			chatroomID,
-			text,
-			userID: authUser.attributes.sub,
-		};
+			const newMessage = {
+				chatroomID: chatroom.id,
+				text,
+				userID: authUser.attributes.sub,
+			};
 
-		await (API.graphql(
-			graphqlOperation(createMessage, { input: newMessage }),
-		) as Promise<GraphQLResult<CreateMessageMutation>>);
+			const newMessageData = await (API.graphql(
+				graphqlOperation(createMessage, { input: newMessage }),
+			) as Promise<GraphQLResult<CreateMessageMutation>>);
 
-		setText("");
+			setText("");
+
+			// set the new message as LastMessage of the chatroom
+			await API.graphql(
+				graphqlOperation(updateChatRoom, {
+					input: {
+						_version: chatroom._version,
+						chatRoomLastMessageId: newMessageData.data?.createMessage?.id,
+						id: chatroom.id,
+					},
+				}),
+			);
+		}
 	};
 
 	return (

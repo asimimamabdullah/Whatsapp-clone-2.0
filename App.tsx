@@ -30,7 +30,6 @@ function App() {
 				graphqlOperation(getUser, { id: authUser.attributes.sub }),
 			) as Promise<GraphQLResult<GetUserQuery>>);
 			if (userData.data?.getUser) {
-				console.log("user already exists in DB");
 				return;
 			}
 			// if there is no user in db, create one
@@ -44,7 +43,7 @@ function App() {
 			await (API.graphql(
 				graphqlOperation(createUser, { input: newUser }),
 			) as Promise<GraphQLResult<CreateUserMutation>>);
-			console.log("after");
+			// console.log("after");
 		};
 
 		syncUser();

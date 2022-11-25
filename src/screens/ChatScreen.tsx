@@ -31,7 +31,6 @@ const ChatScreen = () => {
 
 		// chatrooms.then((result) => setChatRoom(result.data.getChatRoom));
 		chatrooms.then((result: GraphQLResult<GetChatRoomQuery>) => {
-			console.log("chat room: ", result.data?.getChatRoom?.Messages?.items);
 			setChatRoom(result.data?.getChatRoom as ChatRoom);
 		});
 	}, []);
@@ -52,7 +51,7 @@ const ChatScreen = () => {
 				style={styles.list}
 				inverted
 			/>
-			<InputBox chatroomID={chatroomID} />
+			<InputBox chatroom={chatRoom} />
 		</ImageBackground>
 	);
 };

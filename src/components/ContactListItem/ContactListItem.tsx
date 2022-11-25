@@ -18,7 +18,6 @@ const ContactListItem = ({ user }: { user: UserProps }) => {
 	const navigation: any = useNavigation();
 
 	const onPress = async () => {
-		console.warn("Pressed");
 		// check if we already have a chatroom with user
 
 		const existingChatRoom = await getCommonChatRoomWithUser(user.id);
@@ -35,7 +34,6 @@ const ContactListItem = ({ user }: { user: UserProps }) => {
 		) as Promise<GraphQLResult<CreateChatRoomMutation>>);
 
 		if (!newChatRoomData.data?.createChatRoom) {
-			console.log("Error creating the chat error");
 			console.warn("Error creating the chat error");
 		}
 
