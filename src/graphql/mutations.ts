@@ -2,228 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createChatRoom = /* GraphQL */ `
-  mutation CreateChatRoom(
-    $input: CreateChatRoomInput!
-    $condition: ModelChatRoomConditionInput
-  ) {
-    createChatRoom(input: $input, condition: $condition) {
-      id
-      Messages {
-        items {
-          id
-          text
-          chatroomID
-          userID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      users {
-        items {
-          id
-          chatRoomID
-          userID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      LastMessage {
-        id
-        text
-        chatroomID
-        userID
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      chatRoomLastMessageId
-    }
-  }
-`;
-export const updateChatRoom = /* GraphQL */ `
-  mutation UpdateChatRoom(
-    $input: UpdateChatRoomInput!
-    $condition: ModelChatRoomConditionInput
-  ) {
-    updateChatRoom(input: $input, condition: $condition) {
-      id
-      Messages {
-        items {
-          id
-          text
-          chatroomID
-          userID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      users {
-        items {
-          id
-          chatRoomID
-          userID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      LastMessage {
-        id
-        text
-        chatroomID
-        userID
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      chatRoomLastMessageId
-    }
-  }
-`;
-export const deleteChatRoom = /* GraphQL */ `
-  mutation DeleteChatRoom(
-    $input: DeleteChatRoomInput!
-    $condition: ModelChatRoomConditionInput
-  ) {
-    deleteChatRoom(input: $input, condition: $condition) {
-      id
-      Messages {
-        items {
-          id
-          text
-          chatroomID
-          userID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      users {
-        items {
-          id
-          chatRoomID
-          userID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      LastMessage {
-        id
-        text
-        chatroomID
-        userID
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      chatRoomLastMessageId
-    }
-  }
-`;
-export const createMessage = /* GraphQL */ `
-  mutation CreateMessage(
-    $input: CreateMessageInput!
-    $condition: ModelMessageConditionInput
-  ) {
-    createMessage(input: $input, condition: $condition) {
-      id
-      text
-      chatroomID
-      userID
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const updateMessage = /* GraphQL */ `
-  mutation UpdateMessage(
-    $input: UpdateMessageInput!
-    $condition: ModelMessageConditionInput
-  ) {
-    updateMessage(input: $input, condition: $condition) {
-      id
-      text
-      chatroomID
-      userID
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const deleteMessage = /* GraphQL */ `
-  mutation DeleteMessage(
-    $input: DeleteMessageInput!
-    $condition: ModelMessageConditionInput
-  ) {
-    deleteMessage(input: $input, condition: $condition) {
-      id
-      text
-      chatroomID
-      userID
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
 export const createUser = /* GraphQL */ `
   mutation CreateUser(
     $input: CreateUserInput!
@@ -234,12 +12,11 @@ export const createUser = /* GraphQL */ `
       name
       status
       image
-      Messages {
+      ChatRooms {
         items {
           id
-          text
-          chatroomID
           userID
+          chatRoomID
           createdAt
           updatedAt
           _version
@@ -249,12 +26,13 @@ export const createUser = /* GraphQL */ `
         nextToken
         startedAt
       }
-      ChatRooms {
+      Messages {
         items {
           id
-          chatRoomID
-          userID
           createdAt
+          text
+          chatroomID
+          userID
           updatedAt
           _version
           _deleted
@@ -281,12 +59,11 @@ export const updateUser = /* GraphQL */ `
       name
       status
       image
-      Messages {
+      ChatRooms {
         items {
           id
-          text
-          chatroomID
           userID
+          chatRoomID
           createdAt
           updatedAt
           _version
@@ -296,12 +73,13 @@ export const updateUser = /* GraphQL */ `
         nextToken
         startedAt
       }
-      ChatRooms {
+      Messages {
         items {
           id
-          chatRoomID
-          userID
           createdAt
+          text
+          chatroomID
+          userID
           updatedAt
           _version
           _deleted
@@ -328,12 +106,11 @@ export const deleteUser = /* GraphQL */ `
       name
       status
       image
-      Messages {
+      ChatRooms {
         items {
           id
-          text
-          chatroomID
           userID
+          chatRoomID
           createdAt
           updatedAt
           _version
@@ -343,12 +120,13 @@ export const deleteUser = /* GraphQL */ `
         nextToken
         startedAt
       }
-      ChatRooms {
+      Messages {
         items {
           id
-          chatRoomID
-          userID
           createdAt
+          text
+          chatroomID
+          userID
           updatedAt
           _version
           _deleted
@@ -365,6 +143,234 @@ export const deleteUser = /* GraphQL */ `
     }
   }
 `;
+export const createChatRoom = /* GraphQL */ `
+  mutation CreateChatRoom(
+    $input: CreateChatRoomInput!
+    $condition: ModelChatRoomConditionInput
+  ) {
+    createChatRoom(input: $input, condition: $condition) {
+      id
+      name
+      image
+      Messages {
+        items {
+          id
+          createdAt
+          text
+          chatroomID
+          userID
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      LastMessage {
+        id
+        createdAt
+        text
+        chatroomID
+        userID
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      users {
+        items {
+          id
+          userID
+          chatRoomID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      chatRoomLastMessageId
+    }
+  }
+`;
+export const updateChatRoom = /* GraphQL */ `
+  mutation UpdateChatRoom(
+    $input: UpdateChatRoomInput!
+    $condition: ModelChatRoomConditionInput
+  ) {
+    updateChatRoom(input: $input, condition: $condition) {
+      id
+      name
+      image
+      Messages {
+        items {
+          id
+          createdAt
+          text
+          chatroomID
+          userID
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      LastMessage {
+        id
+        createdAt
+        text
+        chatroomID
+        userID
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      users {
+        items {
+          id
+          userID
+          chatRoomID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      chatRoomLastMessageId
+    }
+  }
+`;
+export const deleteChatRoom = /* GraphQL */ `
+  mutation DeleteChatRoom(
+    $input: DeleteChatRoomInput!
+    $condition: ModelChatRoomConditionInput
+  ) {
+    deleteChatRoom(input: $input, condition: $condition) {
+      id
+      name
+      image
+      Messages {
+        items {
+          id
+          createdAt
+          text
+          chatroomID
+          userID
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      LastMessage {
+        id
+        createdAt
+        text
+        chatroomID
+        userID
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      users {
+        items {
+          id
+          userID
+          chatRoomID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      chatRoomLastMessageId
+    }
+  }
+`;
+export const createMessage = /* GraphQL */ `
+  mutation CreateMessage(
+    $input: CreateMessageInput!
+    $condition: ModelMessageConditionInput
+  ) {
+    createMessage(input: $input, condition: $condition) {
+      id
+      createdAt
+      text
+      chatroomID
+      userID
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateMessage = /* GraphQL */ `
+  mutation UpdateMessage(
+    $input: UpdateMessageInput!
+    $condition: ModelMessageConditionInput
+  ) {
+    updateMessage(input: $input, condition: $condition) {
+      id
+      createdAt
+      text
+      chatroomID
+      userID
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteMessage = /* GraphQL */ `
+  mutation DeleteMessage(
+    $input: DeleteMessageInput!
+    $condition: ModelMessageConditionInput
+  ) {
+    deleteMessage(input: $input, condition: $condition) {
+      id
+      createdAt
+      text
+      chatroomID
+      userID
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const createUserChatRoom = /* GraphQL */ `
   mutation CreateUserChatRoom(
     $input: CreateUserChatRoomInput!
@@ -372,28 +378,49 @@ export const createUserChatRoom = /* GraphQL */ `
   ) {
     createUserChatRoom(input: $input, condition: $condition) {
       id
-      chatRoomID
       userID
-      chatRoom {
+      chatRoomID
+      user {
         id
+        name
+        status
+        image
+        ChatRooms {
+          nextToken
+          startedAt
+        }
         Messages {
           nextToken
           startedAt
         }
-        users {
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      chatRoom {
+        id
+        name
+        image
+        Messages {
           nextToken
           startedAt
         }
         LastMessage {
           id
+          createdAt
           text
           chatroomID
           userID
-          createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+        }
+        users {
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
@@ -401,25 +428,6 @@ export const createUserChatRoom = /* GraphQL */ `
         _deleted
         _lastChangedAt
         chatRoomLastMessageId
-      }
-      user {
-        id
-        name
-        status
-        image
-        Messages {
-          nextToken
-          startedAt
-        }
-        ChatRooms {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       createdAt
       updatedAt
@@ -436,28 +444,49 @@ export const updateUserChatRoom = /* GraphQL */ `
   ) {
     updateUserChatRoom(input: $input, condition: $condition) {
       id
-      chatRoomID
       userID
-      chatRoom {
+      chatRoomID
+      user {
         id
+        name
+        status
+        image
+        ChatRooms {
+          nextToken
+          startedAt
+        }
         Messages {
           nextToken
           startedAt
         }
-        users {
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      chatRoom {
+        id
+        name
+        image
+        Messages {
           nextToken
           startedAt
         }
         LastMessage {
           id
+          createdAt
           text
           chatroomID
           userID
-          createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+        }
+        users {
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
@@ -465,25 +494,6 @@ export const updateUserChatRoom = /* GraphQL */ `
         _deleted
         _lastChangedAt
         chatRoomLastMessageId
-      }
-      user {
-        id
-        name
-        status
-        image
-        Messages {
-          nextToken
-          startedAt
-        }
-        ChatRooms {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       createdAt
       updatedAt
@@ -500,28 +510,49 @@ export const deleteUserChatRoom = /* GraphQL */ `
   ) {
     deleteUserChatRoom(input: $input, condition: $condition) {
       id
-      chatRoomID
       userID
-      chatRoom {
+      chatRoomID
+      user {
         id
+        name
+        status
+        image
+        ChatRooms {
+          nextToken
+          startedAt
+        }
         Messages {
           nextToken
           startedAt
         }
-        users {
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      chatRoom {
+        id
+        name
+        image
+        Messages {
           nextToken
           startedAt
         }
         LastMessage {
           id
+          createdAt
           text
           chatroomID
           userID
-          createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+        }
+        users {
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
@@ -529,25 +560,6 @@ export const deleteUserChatRoom = /* GraphQL */ `
         _deleted
         _lastChangedAt
         chatRoomLastMessageId
-      }
-      user {
-        id
-        name
-        status
-        image
-        Messages {
-          nextToken
-          startedAt
-        }
-        ChatRooms {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       createdAt
       updatedAt
