@@ -43,7 +43,6 @@ function App() {
 			await (API.graphql(
 				graphqlOperation(createUser, { input: newUser }),
 			) as Promise<GraphQLResult<CreateUserMutation>>);
-			// console.log("after");
 		};
 
 		syncUser();

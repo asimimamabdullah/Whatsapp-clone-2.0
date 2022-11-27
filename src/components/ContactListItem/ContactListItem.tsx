@@ -53,7 +53,6 @@ const ContactListItem = ({ user }: { user: UserProps }) => {
 			CognitoUser | any
 		>);
 
-		// console.log("auth user; ", authUser);
 		await (API.graphql(
 			graphqlOperation(createUserChatRoom, {
 				input: {

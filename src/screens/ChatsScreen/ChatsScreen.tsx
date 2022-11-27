@@ -20,7 +20,6 @@ const ChatsScreen = (props: Props) => {
 			) as Promise<GraphQLResult<ListChatRoomsQueryOwn>>);
 
 			const rooms = response.data?.getUser?.ChatRooms?.items || [];
-			console.log("something: ", response);
 			const sortedRooms = rooms.sort(
 				(r1, r2) =>
 					new Date(r2.chatRoom.updatedAt).valueOf() -
