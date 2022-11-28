@@ -12,13 +12,15 @@ import Message from "../components/ChatScreen/Message/Message";
 import bg from "../../assets/images/BG.png";
 import { messages } from "../../assets/data";
 import InputBox from "../components/ChatScreen/InputBox/InputBox";
-import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { GraphQLResult, GraphQLOperation } from "@aws-amplify/api-graphql";
 import {
 	ChatRoom,
 	GetChatRoomQuery,
 	Message as MessageType,
 	ListMessagesByChatRoomQuery,
 } from "../API";
+import { onCreateMessage } from "../graphql/subscriptions";
+import { OnCreateMessageSubscription } from "../API";
 
 const ChatScreen = () => {
 	const [chatRoom, setChatRoom] = useState<ChatRoom | null | undefined>(null);
@@ -42,6 +44,7 @@ const ChatScreen = () => {
 		);
 	}, [chatroomID]);
 
+	// fetch messages
 	useEffect(() => {
 		const chatrooms: Promise<GraphQLResult<any>> = API.graphql(
 			graphqlOperation(
@@ -59,6 +62,15 @@ const ChatScreen = () => {
 				result.data?.listMessagesByChatRoom?.items as Array<MessageType>,
 			),
 		);
+
+		// subscribe to new messages
+		const subs: any = API.graphql(graphqlOperation(onCreateMessage));
+		subs.subscribe({
+			next: ({ value }: any) => {
+				console.log("value: ", value);
+			},
+			error: (err: any) => console.log(err),
+		});
 	}, [chatroomID]);
 
 	useEffect(() => {
