@@ -10,17 +10,16 @@ import { API, graphqlOperation } from "aws-amplify";
 import { getChatRoom, listMessagesByChatRoom } from "../graphql/queries";
 import Message from "../components/ChatScreen/Message/Message";
 import bg from "../../assets/images/BG.png";
-import { messages } from "../../assets/data";
 import InputBox from "../components/ChatScreen/InputBox/InputBox";
 import { GraphQLResult, GraphQLOperation } from "@aws-amplify/api-graphql";
+import { OnUpdateChatRoomSubscription } from "../API";
 import {
 	ChatRoom,
 	GetChatRoomQuery,
 	Message as MessageType,
 	ListMessagesByChatRoomQuery,
 } from "../API";
-import { onCreateMessage } from "../graphql/subscriptions";
-import { OnCreateMessageSubscription } from "../API";
+import { onCreateMessage, onUpdateChatRoom } from "../graphql/subscriptions";
 
 const ChatScreen = () => {
 	const [chatRoom, setChatRoom] = useState<ChatRoom | null | undefined>(null);
@@ -42,6 +41,23 @@ const ChatScreen = () => {
 		chatrooms.then((result: GraphQLResult<GetChatRoomQuery>) =>
 			setChatRoom(result.data?.getChatRoom as ChatRoom),
 		);
+
+		const subs: any = API.graphql(
+			graphqlOperation(onUpdateChatRoom, {
+				filter: { id: { eq: chatroomID } },
+			}),
+		) as OnUpdateChatRoomSubscription;
+		const subscription = subs.subscribe({
+			next: ({ value }: any) => {
+				setChatRoom((cr) => ({
+					...(cr || {}),
+					...value.data.onUpdateChatRoom,
+				}));
+			},
+			error: (err: any) => console.warn(err),
+		});
+
+		return () => subscription.unsubscribe();
 	}, [chatroomID]);
 
 	// fetch messages
@@ -64,13 +80,21 @@ const ChatScreen = () => {
 		);
 
 		// subscribe to new messages
-		const subs: any = API.graphql(graphqlOperation(onCreateMessage));
-		subs.subscribe({
+		const subs: any = API.graphql(
+			graphqlOperation(onCreateMessage, {
+				filter: { chatroomID: { eq: chatroomID } },
+			}),
+		);
+		const subscription = subs.subscribe({
 			next: ({ value }: any) => {
-				console.log("value: ", value);
+				setMessages((m: any) => {
+					return [value.data.onCreateMessage, ...m];
+				});
 			},
-			error: (err: any) => console.log(err),
+			error: (err: any) => console.warn(err),
 		});
+
+		return () => subscription.unsubscribe();
 	}, [chatroomID]);
 
 	useEffect(() => {
