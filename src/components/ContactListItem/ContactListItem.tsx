@@ -1,74 +1,26 @@
 import { Text, View, Image, StyleSheet, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { API, Auth, graphqlOperation } from "aws-amplify";
-import { createChatRoom, createUserChatRoom } from "../../graphql/mutations";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import { UserProps } from "../../../types/types";
-import { CreateChatRoomMutation, CreateUserChatRoomMutation } from "../../API";
-import type { GraphQLResult } from "@aws-amplify/api-graphql";
-import { CognitoUser } from "amazon-cognito-identity-js";
-import {
-	getCommonChatRoomWithUser,
-	GetUserChatRooms,
-} from "../../services/chatRoomService";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 
-const ContactListItem = ({ user }: { user: UserProps }) => {
+const ContactListItem = ({
+	user,
+	onpress = () => {},
+	selectable = false,
+	isSelected = false,
+}: {
+	user: UserProps;
+	selectable?: boolean;
+	onpress: any;
+	isSelected?: boolean;
+}) => {
 	const navigation: any = useNavigation();
 
-	const onPress = async () => {
-		// check if we already have a chatroom with user
-
-		const existingChatRoom = await getCommonChatRoomWithUser(user.id);
-		if (existingChatRoom) {
-			navigation.navigate("Chat", { id: existingChatRoom.chatRoom.id });
-			return;
-		}
-
-		// create a new chatroom
-		const newChatRoomData = await (API.graphql(
-			graphqlOperation(createChatRoom, {
-				input: {},
-			}),
-		) as Promise<GraphQLResult<CreateChatRoomMutation>>);
-
-		if (!newChatRoomData.data?.createChatRoom) {
-			console.warn("Error creating the chat error");
-		}
-
-		const newChatRoom = newChatRoomData.data?.createChatRoom;
-
-		// Add the clicked user to chatroom
-
-		await (API.graphql(
-			graphqlOperation(createUserChatRoom, {
-				input: { chatRoomID: newChatRoom?.id, userID: user.id },
-			}),
-		) as Promise<GraphQLResult<CreateUserChatRoomMutation>>);
-
-		// Add the auth user to chat room
-
-		const authUser = await (Auth.currentAuthenticatedUser() as Promise<
-			CognitoUser | any
-		>);
-
-		await (API.graphql(
-			graphqlOperation(createUserChatRoom, {
-				input: {
-					chatRoomID: newChatRoom?.id,
-					userID: authUser.attributes.sub,
-				},
-			}),
-		) as Promise<GraphQLResult<CreateUserChatRoomMutation>>);
-
-		// navigate to the newly created chatroom
-
-		navigation.navigate("Chat", { id: newChatRoom?.id });
-	};
-
 	return (
-		<Pressable style={styles.container} onPress={onPress}>
+		<Pressable style={styles.container} onPress={onpress}>
 			<Image source={{ uri: user.image }} style={styles.image} />
 
 			<View style={styles.content}>
@@ -79,6 +31,13 @@ const ContactListItem = ({ user }: { user: UserProps }) => {
 					{user?.status}
 				</Text>
 			</View>
+
+			{selectable &&
+				(isSelected ? (
+					<AntDesign name="checkcircle" size={24} color="royalblue" />
+				) : (
+					<FontAwesome name="circle-thin" size={24} color="lightgray" />
+				))}
 		</Pressable>
 	);
 };

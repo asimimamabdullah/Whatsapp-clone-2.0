@@ -11,10 +11,12 @@ export const getCommonChatRoomWithUser = async (userID: any) => {
 
 	const chatRooms = response.data?.getUser.ChatRooms.items || [];
 
-	const chatRoom = chatRooms.find((chatRoomItem) =>
-		chatRoomItem?.chatRoom.users.items.some(
-			(useritem) => useritem?.user.id === userID,
-		),
+	const chatRoom = chatRooms.find(
+		(chatRoomItem) =>
+			chatRoomItem?.chatRoom.users.items.length === 2 &&
+			chatRoomItem?.chatRoom.users.items.some(
+				(useritem) => useritem?.user.id === userID,
+			),
 	);
 
 	return chatRoom;
